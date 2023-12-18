@@ -82,17 +82,14 @@ void inserir_no_meio(no **lista, int num, int ant) {
     }
 }
 
-void imprimir_lista(no **lista){
-
-    no *aux = malloc(sizeof(no));
-
-    if(*lista){
-        aux = *lista;
+void imprimir_lista(no *no){
+    if(no){
         cout << "Valor:" << endl;
-        while (aux->proximo){
-            cout << aux->valor << endl;
-            aux = aux->proximo;
+        while (no->proximo){
+            cout << no->valor << endl;
+            no = no->proximo;
         }
+        cout << endl;
     }else{
         cout << "Lista vazia" << endl;
     }
