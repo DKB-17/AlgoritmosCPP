@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -59,7 +60,8 @@ int main(){
 
 
 void inserir_no_inicio(no **lista, int num){
-    no *novo = malloc(sizeof(no));
+
+    no *novo = (no*) malloc(sizeof(no));
 
     if (novo) {
         novo->valor = num;
@@ -72,7 +74,7 @@ void inserir_no_inicio(no **lista, int num){
 
 
 void inserir_no_fim(no **lista, int num){
-    no *aux, *novo = malloc(sizeof(no));
+    no *aux, *novo = (no*) malloc(sizeof(no));
 
     if (novo) {
         novo->valor = num;
@@ -95,7 +97,7 @@ void inserir_no_fim(no **lista, int num){
 }
 
 void inserir_no_meio(no **lista, int num, int ant) {
-    no *aux, *novo = malloc(sizeof(no));
+    no *aux, *novo = (no*) malloc(sizeof(no));
 
     if (novo){
         novo->valor = num;
@@ -123,7 +125,7 @@ void inserir_no_meio(no **lista, int num, int ant) {
 void imprimir_lista(no *no){
     if(no){
         cout << "Valor:" << endl;
-        while (no->proximo){
+        while (no->proximo != NULL){
             cout << no->valor << endl;
             no = no->proximo;
         }
