@@ -133,12 +133,14 @@ void inserir_no_meio(lista *lista, int num, int ant) {
 void imprimir_lista(lista lista){
     no *aux = lista.inicio;
     if(aux->proximo != NULL){
-        cout << "Valor:" << setw(7) << "Tamanho: " << lista.tam << endl;
+        cout << "Valor:"  << endl;
+        cout << aux->valor << endl;
         while (aux->proximo != NULL){
             cout << aux->valor << endl;
             aux = aux->proximo;
         }
         cout << endl;
+        cout << "Tamanho: " << lista.tam << endl;
     }else{
         cout << "Lista vazia" << endl;
     }
