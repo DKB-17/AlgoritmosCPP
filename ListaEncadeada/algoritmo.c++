@@ -9,14 +9,22 @@ struct no{
     no *proximo;
 };
 
-void inserir_no_inicio(no **lista, int num);
-void inserir_no_fim(no **lista, int num);
-void inserir_no_meio(no **lista, int num, int ant);
-void imprimir_lista(no *no);
+struct lista {
+    no *inicio;
+    int tam;
+};
+
+void criar_lista(lista *lista);
+void inserir_no_inicio(lista *lista, int num);
+void inserir_no_fim(lista *lista, int num);
+void inserir_no_meio(lista *lista, int num, int ant);
+void imprimir_lista(lista lista);
 
 int main(){
 
-    no *lista = NULL;
+    lista lista;
+    criar_lista(&lista);
+
     int opcao, valor, anterior;
 
     do {
@@ -59,21 +67,22 @@ int main(){
 }
 
 
-void inserir_no_inicio(no **lista, int num){
+void inserir_no_inicio(lista *lista, int num){
 
     no *novo = (no*) malloc(sizeof(no));
 
     if (novo) {
         novo->valor = num;
-        novo->proximo = *lista;
-        *lista = novo;
+        novo->proximo = lista->inicio;
+        lista->inicio = novo;
+        lista->tam ++;
     }else{
         cout << "Erro ao alocar memoria!" << endl;
     }
 }
 
 
-void inserir_no_fim(no **lista, int num){
+void inserir_no_fim(lista *lista, int num){
     no *aux, *novo = (no*) malloc(sizeof(no));
 
     if (novo) {
@@ -81,56 +90,61 @@ void inserir_no_fim(no **lista, int num){
         novo->proximo = NULL;
 
         // caso o ultimo inserido for o primeiro elemento da lista
-        if (*lista == NULL) {
-            *lista = novo;
+        if (lista->inicio == NULL) {
+            lista->inicio = novo;
         }else{
-            aux = *lista;
-            while(aux->proximo) {
+            aux = lista->inicio;
+            while(aux->proximo != NULL) {
                 aux = aux->proximo;
             }
             aux->proximo = novo;
         }
+        lista->tam ++;
     }
     else{
         cout << "Erro ao alocar memoria!" << endl;
     }
 }
 
-void inserir_no_meio(no **lista, int num, int ant) {
+void inserir_no_meio(lista *lista, int num, int ant) {
     no *aux, *novo = (no*) malloc(sizeof(no));
 
     if (novo){
         novo->valor = num;
-        if (*lista == NULL){
+
+        if (lista->inicio == NULL){
             novo->proximo = NULL;
-            *lista = novo;
+            lista->inicio = novo;
         }else{
-            aux = *lista;
-            while(aux->valor != ant && aux->proximo){
+            aux = lista->inicio;
+            while(aux->valor != ant && aux->proximo != NULL){
                 aux = aux->proximo;
             }
-            if(aux->valor == ant){
-                novo->proximo = aux->proximo;
-                aux->proximo = novo;
-            }else{
-                cout << ant << " não pertence a lista" << endl;
-            }
+            novo->proximo = aux->proximo;
+            aux->proximo = novo;
         }
+        lista->tam ++;
     }
     else{
         cout << "Erro ao alocar memoria!" << endl;
     }
 }
 
-void imprimir_lista(no *no){
-    if(no){
-        cout << "Valor:" << endl;
-        while (no->proximo != NULL){
-            cout << no->valor << endl;
-            no = no->proximo;
+void imprimir_lista(lista lista){
+    no *aux = lista.inicio;
+    if(aux->proximo != NULL){
+        cout << "Valor:" << setw(7) << "Tamanho: " << lista.tam << endl;
+        while (aux->proximo != NULL){
+            cout << aux->valor << endl;
+            aux = aux->proximo;
         }
         cout << endl;
     }else{
         cout << "Lista vazia" << endl;
     }
+}
+
+void criar_lista(lista* lista) {
+    lista->inicio = NULL;
+    lista->tam = 0;
 }
