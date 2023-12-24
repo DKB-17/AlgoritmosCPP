@@ -15,21 +15,24 @@ struct lista {
 };
 
 void criar_lista(lista *lista);
+void inserir_ordenado(lista *lista, int num);
 void inserir_no_inicio(lista *lista, int num);
 void inserir_no_fim(lista *lista, int num);
 void inserir_no_meio(lista *lista, int num, int ant);
+no* remover_elemento(lista *lista, int num);
 void imprimir_lista(lista lista);
 
 int main(){
 
     lista lista;
+    no* remover = NULL;
     criar_lista(&lista);
 
     int opcao, valor, anterior;
 
     do {
 
-        cout << setw(2) << "0 - Sair\n" << setw(2) << "1 - Inserir no Inicio\n" << setw(2) << "2 - Inserir no Fim\n" << setw(2) << "3 - Inserir no Meio\n" << setw(2) << "4 - Imprimir Lista" << endl;
+        cout << setw(2) << "0 - Sair\n" << setw(2) << "1 - Inserir no Inicio\n" << setw(2) << "2 - Inserir no Fim\n" << setw(2) << "3 - Inserir no Meio\n" << setw(2) << "4 - Inserir Ordenado\n" << "5 - Remover Elemento\n" << "6 - Imprimir Lista"  << endl;
         cin >> opcao;
 
         switch (opcao)
@@ -52,6 +55,20 @@ int main(){
             inserir_no_meio(&lista, valor, anterior);
             break;
         case 4:
+            cout << "Digite um valor:";
+            cin >> valor;
+            inserir_ordenado(&lista, valor);
+            break;
+        case 5:
+            cout << "Digite um valor a ser removido:";
+            cin >> valor;
+            remover = remover_elemento(&lista, valor);
+            if(remover){
+                cout << "Elemento a ser removido: " << remover->valor << endl;
+                free(remover);
+            }
+            break;
+        case 6:
             imprimir_lista(lista);
             break;
         default:
@@ -132,10 +149,10 @@ void inserir_no_meio(lista *lista, int num, int ant) {
 
 void imprimir_lista(lista lista){
     no *aux = lista.inicio;
-    if(aux->proximo != NULL){
+    if(aux){
         cout << "Valor:"  << endl;
         cout << aux->valor << endl;
-        while (aux->proximo != NULL){
+        while (aux->proximo){
             cout << aux->valor << endl;
             aux = aux->proximo;
         }
@@ -150,3 +167,53 @@ void criar_lista(lista* lista) {
     lista->inicio = NULL;
     lista->tam = 0;
 }
+
+void inserir_ordenado(lista *lista, int num) {
+
+    no *aux, *novo = (no*) malloc(sizeof(no));
+
+    if (novo) {
+        novo->valor = num;
+        if(lista->inicio == NULL) {
+            novo->proximo = NULL;
+            lista->inicio = novo;
+        }else if(novo->valor < (lista->inicio->valor)){
+            novo->proximo = lista->inicio;
+            lista->inicio = novo;
+        }else{
+            aux = lista->inicio;
+            while (aux->proximo && novo->valor > aux->proximo->valor)
+            {
+                aux = aux->proximo;
+            }
+            novo->proximo = aux->proximo;
+            aux->proximo = novo;
+        }
+    }
+
+
+}
+no* remover_elemento(lista *lista, int num){
+    no *aux, *remover = NULL;
+
+    if(lista->inicio != NULL){
+        if(lista->inicio->valor == num){
+            remover = lista->inicio;
+            lista->inicio = remover->proximo;
+        }else{
+            aux = lista->inicio;
+            while(aux->proximo->valor != num && aux->proximo != NULL) {
+                aux = aux->proximo;
+            }
+            if(aux->proximo != NULL) {
+                remover = aux->proximo;
+                aux->proximo = remover->proximo;
+            }
+        }
+    return remover;
+    }else{
+        cout << "Lista vazia" << endl;
+    }
+    
+}
+
