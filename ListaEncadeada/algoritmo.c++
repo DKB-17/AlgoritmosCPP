@@ -208,12 +208,13 @@ no* remover_elemento(lista *lista, int num){
             if(aux->proximo != NULL) {
                 remover = aux->proximo;
                 aux->proximo = remover->proximo;
+            }else{
+                cout << "Valor:" << num << " Nao pertence a lista" << endl;
             }
         }
-    return remover;
     }else{
         cout << "Lista vazia" << endl;
     }
-    
+    return remover;
 }
 
