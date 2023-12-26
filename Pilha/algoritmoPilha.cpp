@@ -13,6 +13,13 @@ struct pilha{
     int tamanho;
 };
 
+void criar_pilha(pilha *pilha);
+
 int main(){
 
+}
+
+void criar_pilha(pilha *pilha){
+    pilha->inicio;
+    pilha->tamanho = 0;
 }
