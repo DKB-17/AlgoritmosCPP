@@ -20,6 +20,7 @@ void inserir_no_inicio(lista *lista, int num);
 void inserir_no_fim(lista *lista, int num);
 void inserir_no_meio(lista *lista, int num, int ant);
 no* remover_elemento(lista *lista, int num);
+no* buscar_elemento(lista *lista, int num);
 void imprimir_lista(lista lista);
 
 int main(){
@@ -216,5 +217,10 @@ no* remover_elemento(lista *lista, int num){
         cout << "Lista vazia" << endl;
     }
     return remover;
+}
+
+no* buscar_elemento(lista *lista, int num){
+    no *no = NULL;
+    
 }
 
