@@ -17,6 +17,9 @@ void criar_pilha(pilha *pilha);
 
 int main(){
 
+    pilha pilha;
+    criar_pilha(&pilha);
+
 }
 
 void criar_pilha(pilha *pilha){
