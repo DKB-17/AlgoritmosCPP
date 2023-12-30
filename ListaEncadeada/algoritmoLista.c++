@@ -20,20 +20,20 @@ void inserir_no_inicio(lista *lista, int num);
 void inserir_no_fim(lista *lista, int num);
 void inserir_no_meio(lista *lista, int num, int ant);
 no* remover_elemento(lista *lista, int num);
-no* buscar_elemento(lista *lista, int num);
 void imprimir_lista(lista lista);
+no* buscar_elemento(lista *lista, int num);
 
 int main(){
 
     lista lista;
-    no* remover = NULL;
+    no* remover, *busca = NULL;
     criar_lista(&lista);
 
     int opcao, valor, anterior;
 
     do {
 
-        cout << setw(2) << "0 - Sair\n" << setw(2) << "1 - Inserir no Inicio\n" << setw(2) << "2 - Inserir no Fim\n" << setw(2) << "3 - Inserir no Meio\n" << setw(2) << "4 - Inserir Ordenado\n" << "5 - Remover Elemento\n" << "6 - Imprimir Lista"  << endl;
+        cout << setw(2) << "0 - Sair\n" << setw(2) << "1 - Inserir no Inicio\n" << setw(2) << "2 - Inserir no Fim\n" << setw(2) << "3 - Inserir no Antes De\n" << setw(2) << "4 - Inserir Ordenado\n" << "5 - Remover Elemento\n" << "6 - Buscar Elemento\n" << "7 - Imprimir Lista"  << endl;
         cin >> opcao;
 
         switch (opcao)
@@ -70,6 +70,16 @@ int main(){
             }
             break;
         case 6:
+            cout << "Digite um valor para buscar:";
+            cin >> valor;
+            busca = buscar_elemento(&lista, valor);
+            if(busca){
+                cout << "O elemento encontrado :" << busca->valor << " Pertece a lista" << endl;
+            }else{
+                cout << "O elemento nao encontrado " << endl;
+            }
+            break;
+        case 7:
             imprimir_lista(lista);
             break;
         default:
@@ -101,17 +111,17 @@ void inserir_no_inicio(lista *lista, int num){
 
 
 void inserir_no_fim(lista *lista, int num){
-    no *aux, *novo = (no*) malloc(sizeof(no));
+    no *novo = (no*) malloc(sizeof(no));
+    no *aux = lista->inicio;
 
     if (novo) {
         novo->valor = num;
         novo->proximo = NULL;
 
         // caso o ultimo inserido for o primeiro elemento da lista
-        if (lista->inicio == NULL) {
+        if (aux == NULL) {
             lista->inicio = novo;
         }else{
-            aux = lista->inicio;
             while(aux->proximo != NULL) {
                 aux = aux->proximo;
             }
@@ -154,8 +164,8 @@ void imprimir_lista(lista lista){
         cout << "Valor:"  << endl;
         cout << aux->valor << endl;
         while (aux->proximo){
-            cout << aux->valor << endl;
             aux = aux->proximo;
+            cout << aux->valor << endl;
         }
         cout << endl;
         cout << "Tamanho: " << lista.tam << endl;
@@ -189,6 +199,7 @@ void inserir_ordenado(lista *lista, int num) {
             }
             novo->proximo = aux->proximo;
             aux->proximo = novo;
+            lista->tam++;
         }
     }
 
@@ -220,7 +231,15 @@ no* remover_elemento(lista *lista, int num){
 }
 
 no* buscar_elemento(lista *lista, int num){
-    no *no = NULL;
     
+    no *aux, *no = NULL;
+    aux = lista->inicio;
+    while(aux && aux->valor != num){
+        aux = aux->proximo;
+    }
+    if (aux) {
+        no = aux;
+    }
+    return no;
 }
 
