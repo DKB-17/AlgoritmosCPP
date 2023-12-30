@@ -33,13 +33,15 @@ int main(){
             break;
         case 2:
             remover = desempilhar(pilha);
-            cout << remover->valor;
+            pilha = remover->proximo;
+            cout << remover->valor << endl;
             free(remover);
             break;
         case 3:
             imprimir_pilha(pilha);
             break;
         default:
+            cout << "Opcao invalida" << endl;
             break;
         }
     }
@@ -65,7 +67,6 @@ no* desempilhar(no *pilha) {
 
     if (pilha) {
         remover = pilha;
-        pilha = remover->proximo;
     } else {
         cout << "Pilha Vazia" << endl;
     }
@@ -76,11 +77,11 @@ no* desempilhar(no *pilha) {
 
 
 void imprimir_pilha(no *pilha) {
-    no *aux = (no*) malloc(sizeof(no));
 
-    aux = pilha;
-    while(aux->proximo) {
-        cout << aux->valor << endl;
+    cout << "PILHA" << endl;
+    while(pilha) {
+        cout << pilha->valor << endl;
+        pilha = pilha->proximo;
     }
     
 }
