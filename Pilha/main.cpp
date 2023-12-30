@@ -1,17 +1,8 @@
 #include <iostream>
-#include <iomanip>
-#include <stdlib.h>
+#include "pilha.h"
+#include "pilha.c++"
 
 using namespace std;
-
-struct no {
-    int valor;
-    no* proximo;
-};
-
-no* empilhar(no *pilha, int num);
-no* desempilhar (no *pilha);
-void imprimir_pilha(no *pilha);
 
 int main(){
 
@@ -41,47 +32,11 @@ int main(){
             imprimir_pilha(pilha);
             break;
         default:
+            if(opcao != 0){
             cout << "Opcao invalida" << endl;
+            }
             break;
         }
     }
     while (opcao != 0);
-}
-
-
-no* empilhar(no *pilha, int num) {
-    no *novo = (no*) malloc(sizeof(no));
-
-    if (novo) {
-        novo->valor = num;
-        novo->proximo = pilha;
-        return novo;
-    } else{
-        cout << "Erro ao alocar memoria!" << endl;
-    }
-    return NULL;
-}
-
-no* desempilhar(no *pilha) {
-    no *remover = NULL;
-
-    if (pilha) {
-        remover = pilha;
-    } else {
-        cout << "Pilha Vazia" << endl;
-    }
-
-    return remover;
-
-}
-
-
-void imprimir_pilha(no *pilha) {
-
-    cout << "PILHA" << endl;
-    while(pilha) {
-        cout << pilha->valor << endl;
-        pilha = pilha->proximo;
-    }
-    
 }
