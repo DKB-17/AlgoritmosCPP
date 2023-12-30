@@ -8,52 +8,79 @@ struct no {
     int valor;
     no* proximo;
 };
-struct pilha{
-    no* inicio;
-    int tamanho;
-};
 
-void criar_pilha(pilha *pilha);
-void inserir_no_topo(pilha *pilha, int num);
+no* empilhar(no *pilha, int num);
+no* desempilhar (no *pilha);
+void imprimir_pilha(no *pilha);
 
 int main(){
 
-    pilha pilha;
-    criar_pilha(&pilha);
-
-    int valor, opcao;
+    no *remover, *pilha = NULL;
+    
+    int opcao, valor;
 
     do {
 
-        cout << "0 - Sair\n" << "1 - Inserir no Topo\n" << "2 - Remover no Topo\n" << "3 - Imprimir Pilha" << endl;
+        cout << "0 - Sair\n" << "1 - Empilhar\n" << "2 - Desempilhar\n" << "3 - Imprimir Pilha" << endl;
         cin >> opcao;
 
         switch (opcao)
         {
         case 1:
-            cout << "Digite o valor a ser inserido:";
+            cout << "Digite um valor:";
             cin >> valor;
-            inserir_no_topo(&pilha, valor);
+            pilha = empilhar(pilha, valor);
+            break;
+        case 2:
+            remover = desempilhar(pilha);
+            cout << remover->valor;
+            free(remover);
+            break;
+        case 3:
+            imprimir_pilha(pilha);
             break;
         default:
             break;
         }
     }
-    while (opcao != 0)
-
+    while (opcao != 0);
 }
 
-void criar_pilha(pilha *pilha){
-    pilha->inicio;
-    pilha->tamanho = 0;
-}
 
-void inserir_no_topo(pilha *pilha, int num) {
+no* empilhar(no *pilha, int num) {
     no *novo = (no*) malloc(sizeof(no));
 
-    if (pilha->inicio == NULL) {
-        novo.valor = num;
-        novo.proximo = pilha->inicio;
-        pilha->inicio = novo;
+    if (novo) {
+        novo->valor = num;
+        novo->proximo = pilha;
+        return novo;
+    } else{
+        cout << "Erro ao alocar memoria!" << endl;
     }
+    return NULL;
+}
+
+no* desempilhar(no *pilha) {
+    no *remover = NULL;
+
+    if (pilha) {
+        remover = pilha;
+        pilha = remover->proximo;
+    } else {
+        cout << "Pilha Vazia" << endl;
+    }
+
+    return remover;
+
+}
+
+
+void imprimir_pilha(no *pilha) {
+    no *aux = (no*) malloc(sizeof(no));
+
+    aux = pilha;
+    while(aux->proximo) {
+        cout << aux->valor << endl;
+    }
+    
 }
