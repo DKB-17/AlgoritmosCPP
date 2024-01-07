@@ -16,6 +16,7 @@ int main(){
 void move_disco(int d, char ori, char dest, char aux){
     if (d == 1) {
         cout << "Move disco: " << d << " de " << ori << " para " << dest << endl;
+        
     }else {
         move_disco(d-1, ori, aux, dest);
         cout << "Move disco: " << d << " de " << ori << " para " << dest << endl;
